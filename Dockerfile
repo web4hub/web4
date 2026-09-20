@@ -1,3 +1,4 @@
+COPY requirements.txt .
 # --- Stage 1: Builder ---
 # This stage installs dependencies and prepares the virtual environment
 FROM python:3.12-slim AS builder
@@ -44,6 +45,7 @@ RUN groupadd -r appuser && useradd -r -g appuser appuser
 # Copy the virtual environment from the builder stage
 COPY --from=builder /opt/venv /opt/venv
 
+COPY requirements.txt .
 # Add the virtual environment to the PATH
 ENV PATH="/opt/venv/bin:$PATH"
 
@@ -55,7 +57,7 @@ COPY --chown=appuser:appuser . .
 USER appuser
 
 # Expose the port the app runs on
-EXPOSE 5000
+EXPOSE 8080
 
 # Define the entry point
 # We use the list format ["cmd", "arg"] for better signal handling
