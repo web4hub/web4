@@ -1,9 +1,7 @@
 # syntax=docker/dockerfile:1
 
-ARG PYTHON_VERSION=3.12
-
 # --- Stage 1: Build dependencies ---
-FROM python:${PYTHON_VERSION}-slim AS builder
+FROM python:3.12-slim AS builder
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -20,7 +18,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 
 # --- Stage 2: Runtime image ---
-FROM python:${PYTHON_VERSION}-slim AS runner
+FROM python:3.12-slim AS runner
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -34,12 +32,10 @@ RUN groupadd --system appuser \
     && useradd --system --gid appuser --create-home appuser
 
 COPY --from=builder /opt/venv /opt/venv
-
 COPY --chown=appuser:appuser . .
 
 USER appuser
 
 EXPOSE 8080
 
-# Use this only if app.py starts a production-capable server
 CMD ["python", "app.py"]
