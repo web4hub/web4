@@ -1,2 +1,0 @@
-from __init__ import __future__
-  import data from annotations
