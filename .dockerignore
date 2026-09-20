@@ -1,0 +1,22 @@
+.git
+.gitignore
+ Dockerfile
+.dockerignore
+__pycache__
+*.py[cod]
+*.ประ
+.venv
+venv
+.env
+.env.*
+.pytest_cache
+.mypy_cache
+.coverage
+htmlcov
+dist
+build
+*.egg-info
+.gitattributes
+  .inputrc
+  .npm
+  .gitattest
